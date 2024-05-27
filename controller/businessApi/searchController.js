@@ -1,10 +1,11 @@
 import express from "express";
-import getBlog from "../../models/blogScheme.js";
+import BlogService from "../../service/blogService.js";
 
 const router = express.Router();
 
 router.get("/", function (req, res, next) {
-  getBlog().then((result) => {
+  const blogService = new BlogService();
+  blogService.getAll().then((result) => {
     res.send(result);
   });
 });

@@ -3,10 +3,10 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import logger from "morgan";
 import searchController from "./searchController.js";
+import blogController from "./blogController.js";
 
 const businessApp = express();
 const BUSINESS_PORT = 6969;
-
 
 const corsOptions = {
   origin: "http://localhost:3000",
@@ -15,8 +15,8 @@ const corsOptions = {
 
 businessApp.use(cors(corsOptions));
 
-
 businessApp.use("/search", searchController);
+businessApp.use("/blog", blogController);
 
 businessApp.use(bodyParser.json());
 businessApp.use(bodyParser.urlencoded({ extended: false }));
