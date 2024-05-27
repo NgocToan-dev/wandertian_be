@@ -1,10 +1,10 @@
-import { MongoClient, ObjectId } from "mongodb";
+import { MongoClient, ObjectId, ServerApiVersion } from "mongodb";
 
 /**
  * Represents a base repository for MongoDB operations.
  */
 class BaseRepo {
-  uri = "mongodb://localhost:27017/";
+  uri = "mongodb+srv://pntoan156:Tianmopd2d2b@wandertiancluster.rx8d7yt.mongodb.net/?retryWrites=true&w=majority&appName=wandertianCluster";
   dbName = "wandertian";
   collectionName = "";
 
@@ -15,8 +15,11 @@ class BaseRepo {
   constructor(collectionName) {
     this.collectionName = collectionName;
     this.client = new MongoClient(this.uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+      serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+      }
     });
   }
 
@@ -31,7 +34,6 @@ class BaseRepo {
       if (this.collectionName === "") {
         throw new Error("Collection name is not set");
       }
-
       const database = this.client.db(this.dbName);
       const collection = database.collection(this.collectionName);
 
@@ -88,7 +90,7 @@ class BaseRepo {
     try {
       const collection = await this.getCollection();
 
-      const query = { _id: new ObjectId("66531a9d3547778c0ed935c4") };
+      const query = { _id: new ObjectId(id) };
       const result = await collection.findOne(query);
       return result;
     } catch (err) {
