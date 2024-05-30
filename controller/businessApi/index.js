@@ -6,20 +6,18 @@ import searchController from "./searchController.js";
 import blogController from "./blogController.js";
 
 const businessApp = express();
-const BUSINESS_PORT = 6969;
+const BUSINESS_PORT = 7000;
 
-const corsOptions = {
-  origin: "http://localhost:3000",
-  optionsSuccessStatus: 200,
-};
 
-businessApp.use(cors(corsOptions));
+
+businessApp.use(bodyParser.json());
+businessApp.use(bodyParser.urlencoded({ extended: false }));
+
+businessApp.use(cors());
 
 businessApp.use("/search", searchController);
 businessApp.use("/blog", blogController);
 
-businessApp.use(bodyParser.json());
-businessApp.use(bodyParser.urlencoded({ extended: false }));
 businessApp.use(logger("dev"));
 
 businessApp.listen(BUSINESS_PORT, () => {

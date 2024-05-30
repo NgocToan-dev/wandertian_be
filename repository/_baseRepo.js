@@ -81,6 +81,23 @@ class BaseRepo {
     }
   }
 
+  async update(id, data) {
+    try {
+      const collection = await this.getCollection();
+
+      const query = { blog_id: Number(id) };
+      const updateDoc = {
+        $set: data,
+      };
+      const result = await collection.updateOne(query, updateDoc);
+      return result;
+    }catch(err){
+      console.log(err);
+    } finally {
+      await this.client.close();
+    }
+  }
+
   /**
    * Retrieves a document by its ID.
    * @param {string} id - The ID of the document.
