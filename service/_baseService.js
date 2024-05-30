@@ -12,6 +12,14 @@ class BaseService {
   async getById(id) {
     return this._baseRepo.getById(id);
   }
+
+  async create(data) {
+    return this._baseRepo.create(data);
+  }
+
+  async update(id, data) {
+    return this._baseRepo.update(id, data);
+  }
 }
 
 export default BaseService;

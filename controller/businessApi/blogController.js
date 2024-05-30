@@ -11,4 +11,14 @@ router.get("/:id", (req, res) => {
   });
 });
 
+// update blog
+router.put("/:id", (req, res) => {
+  const id = req.params.id;
+  const data = req.body;
+  const blogService = new BlogService();
+  blogService.update(id, data).then((result) => {
+    res.send(result);
+  });
+});
+
 export default router;

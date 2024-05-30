@@ -8,18 +8,14 @@ import blogController from "./blogController.js";
 const businessApp = express();
 
 
-const corsOptions = {
-  origin: "http://localhost:3000",
-  optionsSuccessStatus: 200,
-};
+businessApp.use(bodyParser.json());
+businessApp.use(bodyParser.urlencoded({ extended: false }));
 
-businessApp.use(cors(corsOptions));
+businessApp.use(cors());
 
 businessApp.use("/search", searchController);
 businessApp.use("/blog", blogController);
 
-businessApp.use(bodyParser.json());
-businessApp.use(bodyParser.urlencoded({ extended: false }));
 businessApp.use(logger("dev"));
 
 
