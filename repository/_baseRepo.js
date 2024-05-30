@@ -87,9 +87,9 @@ class BaseRepo {
 
       const query = { blog_id: Number(id) };
       const updateDoc = {
-        $set: data,
+        ...data
       };
-      const result = await collection.updateOne(query, updateDoc);
+      const result = await collection.replaceOne(query, updateDoc);
       return result;
     }catch(err){
       console.log(err);
