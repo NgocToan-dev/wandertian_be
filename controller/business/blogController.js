@@ -3,6 +3,14 @@ import BlogService from "../../service/blogService.js";
 
 const router = express.Router();
 
+// Get all
+router.get("/", (req, res) => {
+  const blogService = new BlogService();
+  blogService.getAll().then((result) => {
+    res.send(result);
+  });
+});
+
 router.get("/:id", (req, res) => {
   const id = req.params.id;
   const blogService = new BlogService();

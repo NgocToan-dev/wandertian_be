@@ -1,8 +1,8 @@
 import BaseRepo from "../repository/_baseRepo.js";
 
 class BaseService {
-  constructor(controllerName) {
-    this._baseRepo = new BaseRepo(controllerName);
+  constructor() {
+    this._baseRepo = new BaseRepo();
   }
 
   async getAll() {

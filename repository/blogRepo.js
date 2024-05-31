@@ -2,7 +2,8 @@ import BaseRepo from "./_baseRepo.js";
 
 class BlogRepo extends BaseRepo {
   constructor() {
-    super();
+    const collectionName = "blog";
+    super(collectionName);
   }
 }
 
