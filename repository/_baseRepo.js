@@ -85,7 +85,7 @@ class BaseRepo {
     try {
       const collection = await this.getCollection();
 
-      const query = { blog_id: Number(id) };
+      const query = { _id: new ObjectId(id) };
       const updateDoc = {
         ...data
       };

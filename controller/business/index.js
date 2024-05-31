@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import logger from "morgan";
 import blogController from "./blogController.js";
 import categoryController from "./categoryController.js";
+import tagController from "./tagController.js";
 
 const businessApp = express();
 
@@ -14,6 +15,7 @@ businessApp.use(cors());
 
 businessApp.use("/blog", blogController);
 businessApp.use("/category", categoryController);
+businessApp.use("/tag", tagController);
 
 businessApp.use(logger("dev"));
 
