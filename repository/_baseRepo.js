@@ -4,7 +4,8 @@ import { MongoClient, ObjectId, ServerApiVersion } from "mongodb";
  * Represents a base repository for MongoDB operations.
  */
 class BaseRepo {
-  uri = "mongodb+srv://pntoan156:Tianmopd2d2b@wandertiancluster.rx8d7yt.mongodb.net/?retryWrites=true&w=majority&appName=wandertianCluster";
+  uri =
+    "mongodb+srv://pntoan156:Tianmopd2d2b@wandertiancluster.rx8d7yt.mongodb.net/?retryWrites=true&w=majority&appName=wandertianCluster";
   dbName = "wandertian";
   collectionName = "";
 
@@ -17,9 +18,8 @@ class BaseRepo {
     this.client = new MongoClient(this.uri, {
       serverApi: {
         version: ServerApiVersion.v1,
-        strict: true,
         deprecationErrors: true,
-      }
+      },
     });
   }
 
@@ -36,6 +36,8 @@ class BaseRepo {
       }
       const database = this.client.db(this.dbName);
       const collection = database.collection(this.collectionName);
+      // create index
+      await collection.createIndex({ description: "text" });
 
       return collection;
     } catch (err) {
@@ -87,11 +89,11 @@ class BaseRepo {
 
       const query = { _id: new ObjectId(id) };
       const updateDoc = {
-        ...data
+        ...data,
       };
       const result = await collection.replaceOne(query, updateDoc);
       return result;
-    }catch(err){
+    } catch (err) {
       console.log(err);
     } finally {
       await this.client.close();
@@ -110,6 +112,51 @@ class BaseRepo {
       const query = { _id: new ObjectId(id) };
       const result = await collection.findOne(query);
       return result;
+    } catch (err) {
+      console.log(err);
+    } finally {
+      await this.client.close();
+    }
+  }
+
+  async getPaging(page, limit, filter) {
+    try {
+      const collection = await this.getCollection();
+      let cursor = null;
+      if (filter === "") {
+        cursor = collection
+          .find()
+          .skip(page * limit)
+          .limit(limit);
+      } else {
+        cursor = collection
+          .find({ $text: { $search: filter } })
+          .skip(page * limit)
+          .limit(limit);
+      }
+      const results = await cursor.toArray();
+      return results;
+    } catch (err) {
+      console.log(err);
+    } finally {
+      await this.client.close();
+    }
+  }
+  async getPagingSummary(filter) {
+    try {
+      const collection = await this.getCollection();
+      let total = 0;
+      if (filter === "") {
+        total = await collection.countDocuments();
+      } else {
+        total = await collection.countDocuments({
+          $text: { $search: filter },
+        });
+      }
+      const summary = {
+        total: total,
+      };
+      return summary;
     } catch (err) {
       console.log(err);
     } finally {

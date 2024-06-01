@@ -1,4 +1,4 @@
-import CategoryRepo from "../repository/categoryRepo.js";
+import TagRepo from "../repository/tagRepo.js";
 import BaseService from "./_baseService.js";
 
 class TagService extends BaseService {

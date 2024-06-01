@@ -20,6 +20,12 @@ class BaseService {
   async update(id, data) {
     return this._baseRepo.update(id, data);
   }
+  async getPaging(page, limit, filter) {
+    return this._baseRepo.getPaging(page, limit, filter);
+  }
+  async getPagingSummary(filter) {
+    return this._baseRepo.getPagingSummary(filter);
+  }
 }
 
 export default BaseService;
