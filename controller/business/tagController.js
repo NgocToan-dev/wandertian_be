@@ -1,5 +1,6 @@
 import express from "express";
 import TagService from "../../service/tagService.js";
+import commonFn from "../socket/commonFn.js";
 
 const router = express.Router();
 
@@ -26,6 +27,7 @@ router.put("/:id", (req, res) => {
   const tagService = new TagService();
   tagService.update(id, data).then((result) => {
     res.send(result);
+    commonFn.update_di_cache("tag");
   });
 });
 

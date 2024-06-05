@@ -1,8 +1,8 @@
 const BUSINESS_PORT = 7000;
-const SOCKET_PORT = 1111;
+const SYSTEM_PORT = 8000;
 
 import businessApp from "./controller/business/index.js";
-import socketApp from "./controller/socket/index.js";
+import systemApp from "./controller/system/index.js";
 
 businessApp.listen(BUSINESS_PORT, () => {
   console.log(
@@ -10,8 +10,8 @@ businessApp.listen(BUSINESS_PORT, () => {
   );
 });
 
-socketApp.listen(SOCKET_PORT, () => {
+systemApp.listen(SYSTEM_PORT, () => {
   console.log(
-    `SOCKET Server is running on port http://localhost:${SOCKET_PORT}`
+    `SYSTEM Server is running on port http://localhost:${SYSTEM_PORT}`
   );
 });
