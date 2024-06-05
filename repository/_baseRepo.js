@@ -72,7 +72,8 @@ class BaseRepo {
   async create(data) {
     try {
       const collection = await this.getCollection();
-
+      // add new objectID for _id
+      data._id = new ObjectId();
       const result = await collection.insertOne(data);
 
       return result;
@@ -157,6 +158,19 @@ class BaseRepo {
         total: total,
       };
       return summary;
+    } catch (err) {
+      console.log(err);
+    } finally {
+      await this.client.close();
+    }
+  }
+  async delete(id) {
+    try {
+      const collection = await this.getCollection();
+
+      const query = { _id: new ObjectId(id) };
+      const result = await collection.deleteOne(query);
+      return result;
     } catch (err) {
       console.log(err);
     } finally {

@@ -26,6 +26,9 @@ class BaseService {
   async getPagingSummary(filter) {
     return this._baseRepo.getPagingSummary(filter);
   }
+  async delete(id) {
+    return this._baseRepo.delete(id);
+  }
 }
 
 export default BaseService;

@@ -3,37 +3,6 @@ import BlogService from "../../service/blogService.js";
 
 const router = express.Router();
 
-/**
- * @swagger
- * /blog:
- *  get:
- *   summary: Get all blogs
- *   description: Get all blogs
- *   responses:
- *    200:
- *      description: A list of blogs.
- *      content:
- *       application/json:
- *        schema:
- *          type: object
- *          properties:
- *           data:
- *            type: array
- *            items:
- *              type: object
- *              properties:
- *               id:
- *                 type: string
- *                 description: _id blog.
- *                 example: 60f3b3b3e4b0b3b4c8f3b3b3
- *               title:   
- *                 type: string
- *                 description: Title of blog.
- *                 example: Blog 1
- *    404:
- *     description: Not Found
-
- */
 router.get("/", (req, res) => {
   const blogService = new BlogService();
   blogService.getAll().then((result) => {
@@ -60,8 +29,21 @@ router.post("/listSummary", (req, res) => {
   });
 });
 
+// create blog
+router.post("/add", (req, res) => {
+  const data = req.body;
+  const blogService = new BlogService();
+  blogService.create(data).then((result) => {
+    res.send(result);
+  });
+});
+
 router.get("/:id", (req, res) => {
   const id = req.params.id;
+  // check id is ObjectId
+  if (!/^[0-9a-fA-F]{24}$/.test(id)) {
+    return;
+  }
   const blogService = new BlogService();
   blogService.getById(id).then((result) => {
     res.send(result);
@@ -74,6 +56,14 @@ router.put("/:id", (req, res) => {
   const data = req.body;
   const blogService = new BlogService();
   blogService.update(id, data).then((result) => {
+    res.send(result);
+  });
+});
+
+router.delete("/:id", (req, res) => {
+  const id = req.params.id;
+  const blogService = new BlogService();
+  blogService.delete(id).then((result) => {
     res.send(result);
   });
 });
