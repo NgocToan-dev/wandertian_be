@@ -1,5 +1,4 @@
 import express from "express";
-import cors from "cors";
 import bodyParser from "body-parser";
 import logger from "morgan";
 import blogController from "./blogController.js";
@@ -7,13 +6,18 @@ import categoryController from "./categoryController.js";
 import tagController from "./tagController.js";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
+import enumeration from "../../common/enum.js";
 
 const businessApp = express();
 
 businessApp.use(bodyParser.json());
 businessApp.use(bodyParser.urlencoded({ extended: false }));
 
-businessApp.use(cors());
+businessApp.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 businessApp.use("/blog", blogController);
 businessApp.use("/category", categoryController);
@@ -39,7 +43,7 @@ const swaggerDefinition = {
   },
   servers: [
     {
-      url: "http://localhost:7000",
+      url: enumeration.httpConfig.business,
       description: "Development server",
     },
   ],

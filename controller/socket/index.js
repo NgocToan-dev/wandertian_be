@@ -1,10 +1,9 @@
 import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
+import enumeration from "../../common/enum.js";
 const SOCKET_PORT = 1111;
-// const domain =
-//   "https://symmetrical-space-goggles-xp6wv74rqqg26xv7-3000.app.github.dev";
-const domain = "http://localhost:3000";
+const domain = enumeration.cors_domain.wandertian_fe;
 const app = express()
 const httpServer = createServer(app);
 const io = new Server(httpServer, {

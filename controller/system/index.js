@@ -1,5 +1,4 @@
 import express from "express";
-import cors from "cors";
 import bodyParser from "body-parser";
 import logger from "morgan";
 import userController from "./userController.js";
@@ -10,7 +9,11 @@ const systemApp = express();
 systemApp.use(bodyParser.json());
 systemApp.use(bodyParser.urlencoded({ extended: false }));
 
-systemApp.use(cors());
+systemApp.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 systemApp.use("/user", userController);
 
