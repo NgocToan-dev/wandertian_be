@@ -1,5 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
+import cors from 'cors';
 import logger from "morgan";
 import blogController from "./blogController.js";
 import categoryController from "./categoryController.js";
@@ -13,11 +14,7 @@ const businessApp = express();
 businessApp.use(bodyParser.json());
 businessApp.use(bodyParser.urlencoded({ extended: false }));
 
-businessApp.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+businessApp.use(cors());
 
 businessApp.use("/blog", blogController);
 businessApp.use("/category", categoryController);
