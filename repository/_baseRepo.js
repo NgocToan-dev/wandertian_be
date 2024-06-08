@@ -36,8 +36,6 @@ class BaseRepo {
       }
       const database = this.client.db(this.dbName);
       const collection = database.collection(this.collectionName);
-      // create index
-      await collection.createIndex({ description: "text" });
 
       return collection;
     } catch (err) {

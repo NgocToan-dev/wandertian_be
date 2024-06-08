@@ -20,12 +20,32 @@ router.get("/:id", (req, res) => {
   });
 });
 
-// update blog
+// create tag
+router.post("/add", (req, res) => {
+  const data = req.body;
+  const tagService = new TagService();
+  tagService.create(data).then((result) => {
+    res.send(result);
+    commonFn.update_di_cache("tag");
+  });
+});
+
+// update tag
 router.put("/:id", (req, res) => {
   const id = req.params.id;
   const data = req.body;
   const tagService = new TagService();
   tagService.update(id, data).then((result) => {
+    res.send(result);
+    commonFn.update_di_cache("tag");
+  });
+});
+
+// delete tag
+router.delete("/:id", (req, res) => {
+  const id = req.params.id;
+  const tagService = new TagService();
+  tagService.delete(id).then((result) => {
     res.send(result);
     commonFn.update_di_cache("tag");
   });

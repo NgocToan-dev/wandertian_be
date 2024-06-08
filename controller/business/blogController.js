@@ -68,4 +68,22 @@ router.delete("/:id", (req, res) => {
   });
 });
 
+// Get Post By Tag
+router.get("/tag/:tag", (req, res) => {
+  const tag = req.params.tag;
+  const blogService = new BlogService();
+  blogService.getByTag(tag).then((result) => {
+    res.send(result);
+  });
+});
+
+// Get Post By Category
+router.get("/category/:category", (req, res) => {
+  const category = req.params.category;
+  const blogService = new BlogService();
+  blogService.getByCategory(category).then((result) => {
+    res.send(result);
+  });
+});
+
 export default router;

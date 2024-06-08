@@ -20,12 +20,32 @@ router.get("/:id", (req, res) => {
   });
 });
 
-// update blog
+// create category
+router.post("/add", (req, res) => {
+  const data = req.body;
+  const categoryService = new CategoryService();
+  categoryService.create(data).then((result) => {
+    res.send(result);
+    commonFn.update_di_cache("category");
+  });
+});
+
+// update category
 router.put("/:id", (req, res) => {
   const id = req.params.id;
   const data = req.body;
   const categoryService = new CategoryService();
   categoryService.update(id, data).then((result) => {
+    res.send(result);
+    commonFn.update_di_cache("category");
+  });
+});
+
+// delete category
+router.delete("/:id", (req, res) => {
+  const id = req.params.id;
+  const categoryService = new CategoryService();
+  categoryService.delete(id).then((result) => {
     res.send(result);
     commonFn.update_di_cache("category");
   });
