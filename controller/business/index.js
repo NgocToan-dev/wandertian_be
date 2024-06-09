@@ -1,6 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
-import cors from 'cors';
+import cors from "cors";
 import logger from "morgan";
 import blogController from "./blogController.js";
 import categoryController from "./categoryController.js";
@@ -11,8 +11,8 @@ import enumeration from "../../common/enum.js";
 
 const businessApp = express();
 
-businessApp.use(bodyParser.json());
-businessApp.use(bodyParser.urlencoded({ extended: false }));
+businessApp.use(bodyParser.json({ limit: "10mb" }));
+businessApp.use(bodyParser.urlencoded({ extended: true, limit: "10mb" }));
 
 businessApp.use(cors());
 

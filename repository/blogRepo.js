@@ -24,7 +24,7 @@ class BlogRepo extends BaseRepo {
       console.log(err);
     } finally {
       await this.client.close();
-    }
+  }
   }
   /**
    * Get all blog posts by category
