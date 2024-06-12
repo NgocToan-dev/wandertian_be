@@ -71,6 +71,7 @@ class BaseRepo {
     try {
       const collection = await this.getCollection();
       // add new objectID for _id
+      delete data.mode;
       data._id = new ObjectId();
       const result = await collection.insertOne(data);
 
@@ -85,7 +86,7 @@ class BaseRepo {
   async update(id, data) {
     try {
       const collection = await this.getCollection();
-
+      delete data.mode;
       const query = { _id: new ObjectId(id) };
       const updateDoc = {
         ...data,
