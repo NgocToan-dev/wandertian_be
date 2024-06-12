@@ -12,9 +12,15 @@ const cors_domain = {
   wandertian_fe: "http://localhost:3000",
 };
 
+const postStatus = {
+  DRAFT: "DRAFT",
+  PUBLISHED: "PUBLISHED",
+};
+
 const enumeration = {
   httpConfig,
   cors_domain,
+  postStatus,
 };
 
 export default enumeration;

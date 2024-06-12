@@ -15,16 +15,21 @@ router.post("/list", (req, res) => {
   const page = Number(req.body.page) || 0;
   const limit = Number(req.body.limit) || 20;
   const filter = req.body.filter || "";
+  const filterStatus = req.body.filterStatus || "";
+  const column = req.body.column || "";
   const blogService = new BlogService();
-  blogService.getPaging(page, limit, filter).then((result) => {
-    res.send(result);
-  });
+  blogService
+    .getPaging({ page, limit, filter, filterStatus, column })
+    .then((result) => {
+      res.send(result);
+    });
 });
 // get total page and summary of blog
 router.post("/listSummary", (req, res) => {
   const filter = req.body.filter || "";
+  const filterStatus = req.body.filterStatus || "";
   const blogService = new BlogService();
-  blogService.getPagingSummary(filter).then((result) => {
+  blogService.getPagingSummary(filter, filterStatus).then((result) => {
     res.send(result);
   });
 });

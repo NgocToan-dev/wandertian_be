@@ -20,11 +20,11 @@ class BaseService {
   async update(id, data) {
     return this._baseRepo.update(id, data);
   }
-  async getPaging(page, limit, filter) {
-    return this._baseRepo.getPaging(page, limit, filter);
+  async getPaging(payload) {
+    return this._baseRepo.getPaging(payload);
   }
-  async getPagingSummary(filter) {
-    return this._baseRepo.getPagingSummary(filter);
+  async getPagingSummary(filter, filterStatus) {
+    return this._baseRepo.getPagingSummary(filter, filterStatus);
   }
   async delete(id) {
     return this._baseRepo.delete(id);

@@ -118,21 +118,58 @@ class BaseRepo {
     }
   }
 
-  async getPaging(page, limit, filter) {
+  /**
+   * Retrieves a paginated list of results from the collection.
+   *
+   * @param {number} page - The page number.
+   * @param {number} limit - The maximum number of results per page.
+   * @param {string} filter - The filter to apply to the results.
+   * @returns {Promise<Array>} - A promise that resolves to an array of results.
+   * @modified by pntoan 12/6/2024 - filter by post status
+   */
+  async getPaging(payload) {
     try {
+      payload = {
+        page: 0,
+        limit: 20,
+        filter: "",
+        filterStatus: "",
+        column: "*",
+        ...payload,
+      };
       const collection = await this.getCollection();
       let cursor = null;
-      if (filter === "") {
+      if (!payload.filterStatus) {
         cursor = collection
-          .find()
-          .skip(page * limit)
-          .limit(limit);
+          .find(
+            {},
+            { projection: payload.column === "*" ? [] : payload.column }
+          )
+          .skip(payload.page * payload.limit)
+          .limit(payload.limit);
       } else {
-        cursor = collection
-          .find({ $text: { $search: filter } })
-          .skip(page * limit)
-          .limit(limit);
+        if (payload.filter === "") {
+          cursor = collection
+            .find(
+              { postStatus: payload.filterStatus },
+              { projection: payload.column === "*" ? [] : payload.column }
+            )
+            .skip(payload.page * payload.limit)
+            .limit(payload.limit);
+        } else {
+          cursor = collection
+            .find(
+              {
+                $text: { $search: payload.filter },
+                postStatus: payload.filterStatus,
+              },
+              { projection: payload.column === "*" ? [] : payload.column }
+            )
+            .skip(payload.page * payload.limit)
+            .limit(payload.limit);
+        }
       }
+
       const results = await cursor.toArray();
       return results;
     } catch (err) {
@@ -141,17 +178,30 @@ class BaseRepo {
       await this.client.close();
     }
   }
-  async getPagingSummary(filter) {
+  /**
+   * Retrieves the paging summary based on the provided filter and filterStatus.
+   * @param {string} filter - The filter to be applied.
+   * @param {string} filterStatus - The status to filter by.
+   * @returns {Object} The paging summary object containing the total count.
+   * @throws {Error} If an error occurs while retrieving the paging summary.
+   */
+  async getPagingSummary(filter, filterStatus) {
     try {
       const collection = await this.getCollection();
       let total = 0;
-      if (filter === "") {
+      if (!filterStatus) {
         total = await collection.countDocuments();
       } else {
-        total = await collection.countDocuments({
-          $text: { $search: filter },
-        });
+        if (filter === "") {
+          total = await collection.countDocuments({ postStatus: filterStatus });
+        } else {
+          total = await collection.countDocuments({
+            $text: { $search: filter },
+            postStatus: filterStatus,
+          });
+        }
       }
+
       const summary = {
         total: total,
       };
