@@ -5,6 +5,7 @@ import logger from "morgan";
 import blogController from "./blogController.js";
 import categoryController from "./categoryController.js";
 import tagController from "./tagController.js";
+import commentController from "./commentController.js";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import enumeration from "../../common/enum.js";
@@ -19,6 +20,7 @@ businessApp.use(cors());
 businessApp.use("/blog", blogController);
 businessApp.use("/category", categoryController);
 businessApp.use("/tag", tagController);
+businessApp.use("/comment", commentController);
 
 businessApp.use(logger("dev"));
 

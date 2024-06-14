@@ -83,15 +83,18 @@ class BaseRepo {
     }
   }
 
-  async update(id, data) {
+  async update(data) {
     try {
       const collection = await this.getCollection();
       delete data.mode;
-      const query = { _id: new ObjectId(id) };
+      if (!data._id) data._id = new ObjectId();
+      const query = { _id: new ObjectId(data._id) };
       const updateDoc = {
         ...data,
       };
-      const result = await collection.replaceOne(query, updateDoc);
+      const result = await collection.replaceOne(query, updateDoc, {
+        upsert: true,
+      });
       return result;
     } catch (err) {
       console.log(err);

@@ -13,17 +13,17 @@ router.get("/:post_id", (req, res) => {
 });
 
 // get replies of comment
-router.get("/:comment_id/replies", (req, res) =>{
+router.get("/:comment_id/replies", (req, res) => {
   const comment_id = req.params.comment_id;
   const commentService = new CommentService();
   commentService.getRepliesOfComment(comment_id).then((result) => {
     res.send(result);
   });
-})
+});
 
 // save comment of post
 router.post("/save", (req, res) => {
-  const comment = req.body.comment;
+  const comment = req.body;
   const commentService = new CommentService();
   commentService.update(comment).then((result) => {
     res.send(result);
@@ -31,14 +31,12 @@ router.post("/save", (req, res) => {
 });
 
 // Delete comment
-router.delete("/", (req, res) => {
-  const comment_id = req.body.comment_id;
+router.delete("/:comment_id", (req, res) => {
+  const comment_id = req.params.comment_id;
   const commentService = new CommentService();
   commentService.delete(comment_id).then((result) => {
     res.send(result);
   });
-})
-
-
+});
 
 export default router;

@@ -32,10 +32,9 @@ router.post("/add", (req, res) => {
 
 // update category
 router.put("/:id", (req, res) => {
-  const id = req.params.id;
   const data = req.body;
   const categoryService = new CategoryService();
-  categoryService.update(id, data).then((result) => {
+  categoryService.update(data).then((result) => {
     res.send(result);
     commonFn.update_di_cache("category");
   });

@@ -17,8 +17,8 @@ class BaseService {
     return this._baseRepo.create(data);
   }
 
-  async update(id, data) {
-    return this._baseRepo.update(id, data);
+  async update(data) {
+    return this._baseRepo.update(data);
   }
   async getPaging(payload) {
     return this._baseRepo.getPaging(payload);

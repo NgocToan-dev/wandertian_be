@@ -8,14 +8,18 @@ class UserRepo extends BaseRepo {
   async checkLogin(username, password) {
     try {
       const collection = await this.getCollection();
-      const user = await collection.findOne({ username, password }, {_id: 1});
-      let contextReturn = null
-      if(user){
+      const user = await collection.findOne({ username, password }, { _id: 1 });
+      let contextReturn = null;
+      if (user) {
         const context = await this.getContext();
-        contextReturn = {user_id: user._id, ...context};
+        contextReturn = {
+          user_id: user._id,
+          ...context,
+        };
         return {
           context: contextReturn,
-          token: 'fakeToken',
+          token: "fakeToken",
+          isAdmin: user.isAdmin,
         };
       }
       return null;
@@ -25,7 +29,7 @@ class UserRepo extends BaseRepo {
       await this.client.close();
     }
   }
-  async getContext(){
+  async getContext() {
     return {};
   }
 }
