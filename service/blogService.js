@@ -40,8 +40,8 @@ class BlogService extends BaseService {
   async getByTag(tag) {
     return await this._baseRepo.getByTag(tag);
   }
-  async getByCategory(category) {
-    return await this._baseRepo.getByCategory(category);
+  async getByCategory(category, limit, post_ids) {
+    return await this._baseRepo.getByCategory(category, limit, post_ids);
   }
 }
 

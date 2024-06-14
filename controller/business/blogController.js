@@ -83,10 +83,12 @@ router.get("/tag/:tag", (req, res) => {
 });
 
 // Get Post By Category
-router.get("/category/:category", (req, res) => {
-  const category = req.params.category;
+router.post("/category", (req, res) => {
+  const category = req.body.category;
+  const limit = Number(req.body.limit);
+  const post_ids = req.body.except;
   const blogService = new BlogService();
-  blogService.getByCategory(category).then((result) => {
+  blogService.getByCategory(category, limit, post_ids).then((result) => {
     res.send(result);
   });
 });

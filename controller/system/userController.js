@@ -3,10 +3,11 @@ import UserService from "../../service/userService.js";
 
 const router = express.Router();
 
-router.post("/checkLogin", (req, res) => {
-  const { username, password } = req.body;
+router.post("/checkLogin", async (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
   const userService = new UserService();
-  const result = userService.checkLogin(username, password);
+  const result = await userService.checkLogin(username, password);
   res.send(result);
 });
 
