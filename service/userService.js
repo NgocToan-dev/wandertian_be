@@ -6,8 +6,11 @@ class UserService extends BaseService {
     super();
     this._baseRepo = new UserRepo();
   }
-  async checkLogin(username, password){
-    return await this._baseRepo.checkLogin(username, password);
+  async checkLogin(email, password){
+    return await this._baseRepo.checkLogin(email, password);
+  }
+  async signUp(user){
+    return await this._baseRepo.signUp(user);
   }
 }
 

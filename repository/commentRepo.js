@@ -22,6 +22,7 @@ class CommentRepo extends BaseRepo {
       const collection = await this.getCollection();
       const results = await collection
         .find({ parent_id: comment_id })
+        .sort({ createdDate: 1 })
         .toArray();
       return results;
     } catch (err) {

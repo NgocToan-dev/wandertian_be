@@ -6,7 +6,7 @@ const httpConfig = {
 
 const cors_domain = {
   // wandertian_fe:
-    // "https://11818e0e-0a70-4cff-a6f3-309533c58c60-00-15ukw4lg7kw00.pike.replit.dev:3001",
+  // "https://11818e0e-0a70-4cff-a6f3-309533c58c60-00-15ukw4lg7kw00.pike.replit.dev:3001",
   wandertian_fe: "http://localhost:3000",
 };
 
@@ -15,10 +15,16 @@ const postStatus = {
   PUBLISHED: "PUBLISHED",
 };
 
+const validateSave = {
+  DUPLICATE_EMAIL: "DUPLICATE_EMAIL",
+  DUPLICATE_USERNAME: "DUPLICATE_USERNAME",
+};
+
 const enumeration = {
   httpConfig,
   cors_domain,
   postStatus,
+  validateSave,
 };
 
 export default enumeration;
