@@ -7,6 +7,16 @@ class BlogRepo extends BaseRepo {
     super(collectionName);
   }
 
+  async getPaging(payload) {
+    payload.column = {
+      _id: 1,
+      title: 1,
+      description: 1,
+      createdDate: 1,
+      updatedDate: 1,
+    };
+    return await super.getPaging(payload);
+  }
   /**
    * Get all blog posts by tag
    * @param {*} tag
@@ -41,7 +51,7 @@ class BlogRepo extends BaseRepo {
       if (limit) {
         results = await collection
           .find({
-            _id: { $nin: [...post_ids].map(e => new ObjectId(e)) },
+            _id: { $nin: [...post_ids].map((e) => new ObjectId(e)) },
             category: {
               $elemMatch: { name: category },
             },

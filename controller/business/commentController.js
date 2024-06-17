@@ -25,7 +25,7 @@ router.get("/:comment_id/replies", (req, res) => {
 router.post("/save", (req, res) => {
   const comment = req.body;
   const commentService = new CommentService();
-  commentService.update(comment).then((result) => {
+  commentService.create(comment).then((result) => {
     res.send(result);
   });
 });

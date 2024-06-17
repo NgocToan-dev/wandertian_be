@@ -87,7 +87,6 @@ class BaseRepo {
     try {
       const collection = await this.getCollection();
       delete data.mode;
-      if (!data._id) data._id = new ObjectId();
       const query = { _id: new ObjectId(data._id) };
       const updateDoc = {
         ...data,
@@ -147,19 +146,21 @@ class BaseRepo {
         cursor = collection
           .find(
             {},
-            { projection: payload.column === "*" ? [] : payload.column }
+            { projection: payload.column === "*" ? {} : payload.column }
           )
           .skip(payload.page * payload.limit)
-          .limit(payload.limit);
+          .limit(payload.limit)
+          .sort({ createdDate: -1 });
       } else {
         if (payload.filter === "") {
           cursor = collection
             .find(
               { postStatus: payload.filterStatus },
-              { projection: payload.column === "*" ? [] : payload.column }
+              { projection: payload.column === "*" ? {} : payload.column }
             )
             .skip(payload.page * payload.limit)
-            .limit(payload.limit);
+            .limit(payload.limit)
+            .sort({ createdDate: -1 });
         } else {
           cursor = collection
             .find(
@@ -167,10 +168,11 @@ class BaseRepo {
                 $text: { $search: payload.filter },
                 postStatus: payload.filterStatus,
               },
-              { projection: payload.column === "*" ? [] : payload.column }
+              { projection: payload.column === "*" ? {} : payload.column }
             )
             .skip(payload.page * payload.limit)
-            .limit(payload.limit);
+            .limit(payload.limit)
+            .sort({ createdDate: -1 });
         }
       }
 
