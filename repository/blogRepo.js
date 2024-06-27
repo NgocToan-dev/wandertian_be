@@ -9,11 +9,7 @@ class BlogRepo extends BaseRepo {
 
   async getPaging(payload) {
     payload.column = {
-      _id: 1,
-      title: 1,
-      description: 1,
-      createdDate: 1,
-      updatedDate: 1,
+      contents: 0,
     };
     return await super.getPaging(payload);
   }
