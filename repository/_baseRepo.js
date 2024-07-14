@@ -91,9 +91,7 @@ class BaseRepo {
       const updateDoc = {
         ...data,
       };
-      const result = await collection.replaceOne(query, updateDoc, {
-        upsert: true,
-      });
+      const result = await collection.updateOne(query, updateDoc);
       return result;
     } catch (err) {
       console.log(err);
