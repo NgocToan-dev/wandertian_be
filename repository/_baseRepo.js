@@ -88,10 +88,13 @@ class BaseRepo {
       const collection = await this.getCollection();
       delete data.mode;
       const query = { _id: new ObjectId(data._id) };
+      delete data._id;
       const updateDoc = {
-        ...data,
+        $set: { ...data },
       };
-      const result = await collection.updateOne(query, updateDoc);
+      const result = await collection.updateOne(query, updateDoc, {
+        upsert: true,
+      });
       return result;
     } catch (err) {
       console.log(err);
